@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <title>W11: Investment Calculator</title>
+</head>
+<body>
+  <h1>Investment Calculator</h1>
+  <label>Amount invested (principal):
+    <input type="text" id="principal" size="5"><br>
+  </label>
+  <label>Annual rate (example = 0.08): 
+    <input type="text" id="rate" size="5"><br>
+  </label>
+  <label>Number of years: 
+    <input type="text" id="years" size="5"><br>
+  </label>
+  <label>Periods per year: 
+    <input type="text" id="periods" size="5"><br>
+  </label>
+  <button type="button" onclick="doFV()">Compute Future Value</button>
+  <div id="output"></div>
+
+  <script>
+    function computeFutureValue(principal, annualRate, years, periodsPerYear) {
+    let fv = principal*(Math.pow((1+(annualRate/periodsPerYear)), (periodsPerYear*years)));
+    return fv;
+    }
+    
+    function doFV() {
+    let a = parseFloat(document.getElementById("principal").value);
+    let r = parseFloat(document.getElementById("rate").value);
+    let y = parseFloat(document.getElementById("years").value);
+    let p = parseFloat(document.getElementById("periods").value);
+    futureValue = computeFutureValue(a, r, y, p);
+
+   
+    document.getElementById("output").textContent = `The future value will be $${futureValue.toFixed(2)}`;
+      }
+  </script>
+</body>
+</html>
