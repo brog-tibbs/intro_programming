@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <title>W11: Loans</title>
+</head>
+<body>
+  <h1>Loan Calculator</h1>
+  <label>Amount borrowed (principal):
+    <input type="text" id="principal" size="5"><br>
+  </label>
+  <label>Annual interest rate (example = 0.065): 
+    <input type="text" id="rate" size="5"><br>
+  </label>
+  <label>Number of years: 
+    <input type="text" id="years" size="5"><br>
+  </label>
+  <label>Payments per year: 
+    <input type="text" id="periods" size="5"><br>
+  </label>
+  <button type="button" onclick="doPayment()">Compute payment</button>
+  <div id="payment"></div>
+  <label>Number of payments paid to date: 
+    <input type="text" id="paymentsPaid" size="5"><br>
+  </label>
+  <button type="button" onclick="doBalance()">Compute payoff amount</button>
+  <div id="payoffAmount"></div>
+
+  <script>
+    function computePayment(principal, annualRate, years, periodsPerYear) {
+    let p = (principal*(annualRate/periodsPerYear))/(1-Math.pow((1+(annualRate/periodsPerYear)), -(years*periodsPerYear)));
+    return p;
+    }
+    
+    function doPayment() {
+    let a = parseFloat(document.getElementById("principal").value);
+    let r = parseFloat(document.getElementById("rate").value);
+    let y = parseFloat(document.getElementById("years").value);
+    let ppy = parseFloat(document.getElementById("periods").value);
+    payment = computePayment(a, r, y, ppy);
+    document.getElementById("payment").textContent = `$${payment.toFixed(2)}`;
+      }
+
+      function computeBalance(principal, annualRate, years, periodsPerYear, numberOfPaymentsPaidToDate) {
+    let b = (principal*Math.pow((1+(annualRate/periodsPerYear)), numberOfPaymentsPaidToDate))-((principal*(annualRate/periodsPerYear))/(1-Math.pow((1+(annualRate/periodsPerYear)), -(years*periodsPerYear)))*((Math.pow(1+(annualRate/periodsPerYear), numberOfPaymentsPaidToDate))-1))/(annualRate/periodsPerYear);
+    return b;
+    }
+    
+    function doBalance() {
+    let a = parseFloat(document.getElementById("principal").value);
+    let r = parseFloat(document.getElementById("rate").value);
+    let y = parseFloat(document.getElementById("years").value);
+    let ppy = parseFloat(document.getElementById("periods").value);
+    let pmt = parseFloat(document.getElementById("paymentsPaid").value);
+    balance = computeBalance(a, r, y, ppy, pmt);
+    document.getElementById("payoffAmount").textContent = `$${balance.toFixed(2)}`;
+      }
+  </script>
+</body>
+</html>
